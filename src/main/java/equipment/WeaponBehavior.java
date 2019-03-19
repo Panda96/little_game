@@ -1,4 +1,4 @@
-package weapon;
+package equipment;
 
 /**
  * Created by PandaLin on 2019/3/18.
