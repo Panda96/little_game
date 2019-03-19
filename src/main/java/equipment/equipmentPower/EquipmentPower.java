@@ -1,6 +1,9 @@
-package equipment;
+package equipment.equipmentPower;
 
 
+
+import equipment.Capability;
+import equipment.Equipment;
 
 import java.util.List;
 

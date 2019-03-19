@@ -1,9 +1,10 @@
-package equipment;
+package equipment.equipmentPower;
 
 import constant.Element;
 import constant.Quality;
-
-import java.util.List;
+import equipment.Capability;
+import equipment.Equipment;
+import equipment.Gem;
 
 /**
  * Created by PandaLin on 2019/3/19.
@@ -20,10 +21,15 @@ public class GemPower implements EquipmentPower {
         int base = getBase(quality);
         Element gemElement = gem.getElement();
         Equipment mainEquipment = gem.getEquipment();
-        Capability capability = mainEquipment.getCapability();
-        int[] elements = capability.getElements();
-        elements[gemElement.getType()]+=base;
-        return capability;
+        if(mainEquipment == null){
+            return new Capability(base);
+        }else{
+            Capability capability = mainEquipment.getCapability();
+            int[] elements = capability.getElements();
+            elements[gemElement.getType()]+=base;
+            return capability;
+        }
+
 
     }
 }

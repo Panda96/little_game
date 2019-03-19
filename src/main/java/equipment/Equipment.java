@@ -1,5 +1,6 @@
 package equipment;
 
+import constant.EquipmentType;
 import constant.Quality;
 
 import java.util.ArrayList;
@@ -11,8 +12,9 @@ import java.util.List;
 public abstract class Equipment {
     private Quality quality;
     private List<GemValue> decorators;
+    private EquipmentType type;
 
-    Equipment(Quality quality) {
+    public Equipment(Quality quality) {
         this.quality = quality;
     }
 
@@ -27,11 +29,19 @@ public abstract class Equipment {
         this.quality = quality;
     }
 
-    Quality getQuality() {
+    public Quality getQuality() {
         return quality;
     }
 
+    public void setDecorators(List<GemValue> decorators) {
+        this.decorators = decorators;
+    }
 
+    public EquipmentType getType() {
+        return type;
+    }
 
-
+    public void setType(EquipmentType type) {
+        this.type = type;
+    }
 }

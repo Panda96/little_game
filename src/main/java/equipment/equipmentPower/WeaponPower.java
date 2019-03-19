@@ -1,9 +1,9 @@
-package equipment;
+package equipment.equipmentPower;
 
-import constant.Element;
 import constant.Quality;
-
-import java.util.List;
+import equipment.Capability;
+import equipment.Equipment;
+import equipment.equipmentPower.EquipmentPower;
 
 /**
  * Created by PandaLin on 2019/3/19.
