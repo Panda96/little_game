@@ -1,11 +1,7 @@
 package role.builder;
 
-import constant.Element;
-import constant.EquipmentType;
-import constant.Quality;
+import constant.*;
 import equipment.*;
-import equipment.weapon.GunBehavior;
-import equipment.weapon.WeaponBehavior;
 import role.Bag;
 
 import java.util.ArrayList;
@@ -13,15 +9,14 @@ import java.util.ArrayList;
 /**
  * Created by PandaLin on 2019/3/19.
  */
-public class ShooterBuilder extends RoleBuilder {
-    public void setBasicInfo() {
-        role.setMaxLife(10000);
-        role.setCurrentLife(role.getMaxLife());
-        role.setBag(new Bag());
-        role.setExp(0);
-        role.setMoney(0);
+public class ShooterBuilder extends HeroBuilder {
 
-
+    public void buildBasicCapability() {
+        Capability capability = new Capability(Constant.heroCapabilityBase);
+        int[] elements = new int[5];
+        elements[Element.METAL.getType()] = Constant.heroCapabilityElement;
+        capability.setElements(elements);
+        role.setBaseCapability(capability);
     }
 
     public void buildArmor() {
@@ -41,11 +36,5 @@ public class ShooterBuilder extends RoleBuilder {
     }
 
 
-    public void buildBasicCapability() {
-        Capability capability = new Capability(50);
-        int[] elements = new int[5];
-        elements[Element.METAL.getType()] = 5;
-        capability.setElements(elements);
-        role.setBaseCapability(capability);
-    }
+
 }

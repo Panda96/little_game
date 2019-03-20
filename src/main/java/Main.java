@@ -10,66 +10,73 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        Gem gem = new Gem(Quality.LOW, Element.WATER);
-        Capability capability = gem.getCapability();
-        System.out.println(capability.getBase());
-        for(int a : capability.getElements()){
-            System.out.print(a+" ");
-        }
-        System.out.println();
-        for(GemValue gemValue: gem.getDecorators()){
-            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-        }
-        System.out.println(gem.getDecorators().size());
+//        Gem gemCoefficient = new Gem(Quality.LOW, Element.WATER);
+//        Capability capability = gemCoefficient.getCapability();
+//        System.out.println(capability.getBase());
+//        for(int a : capability.getElements()){
+//            System.out.print(a+" ");
+//        }
+//        System.out.println();
+//        for(GemValue gemValue: gemCoefficient.getDecorators()){
+//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
+//        }
+//        System.out.println(gemCoefficient.getDecorators().size());
+//
+//        Equipment armorCoefficient = new Armor(Quality.HIGH);
+//        System.out.println(capability.getBase());
+//        for(int a : capability.getElements()){
+//            System.out.print(a+" ");
+//        }
+//        System.out.println();
+//        for(GemValue gemValue: armorCoefficient.getDecorators()){
+//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
+//        }
+//        System.out.println(armorCoefficient.getDecorators().size());
+//
+//
+//        gemCoefficient.setEquipment(armorCoefficient);
+//        armorCoefficient = gemCoefficient;
+//        armorCoefficient = new Gem(Quality.MEDIUM, Element.METAL, armorCoefficient);
+//        capability = armorCoefficient.getCapability();
+//        System.out.println(capability.getBase());
+//        for(int a : capability.getElements()){
+//            System.out.print(a+" ");
+//        }
+//        System.out.println();
+//        for(GemValue gemValue: armorCoefficient.getDecorators()){
+//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
+//        }
+//        System.out.println(armorCoefficient.getDecorators().size());
+//
+//        armorCoefficient = EquipmentFactory.addGem(armorCoefficient, new GemValue(Quality.MEDIUM, Element.WOOD));
+//        capability = armorCoefficient.getCapability();
+//        System.out.println(capability.getBase());
+//        for(int a : capability.getElements()){
+//            System.out.print(a+" ");
+//        }
+//        System.out.println();
+//        for(GemValue gemValue: armorCoefficient.getDecorators()){
+//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
+//        }
+//        System.out.println(armorCoefficient.getDecorators().size());
+//
+//        armorCoefficient = EquipmentFactory.removeArmorGem(armorCoefficient, new GemValue(Quality.LOW, Element.WATER));
+//        capability = armorCoefficient.getCapability();
+//        System.out.println(capability.getBase());
+//        for(int a : capability.getElements()){
+//            System.out.print(a+" ");
+//        }
+//        System.out.println();
+//        for(GemValue gemValue: armorCoefficient.getDecorators()){
+//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
+//        }
+//        System.out.println(armorCoefficient.getDecorators().size());
 
-        Equipment armor = new Armor(Quality.HIGH);
-        System.out.println(capability.getBase());
-        for(int a : capability.getElements()){
-            System.out.print(a+" ");
-        }
-        System.out.println();
-        for(GemValue gemValue: armor.getDecorators()){
-            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-        }
-        System.out.println(armor.getDecorators().size());
-
-
-        gem.setEquipment(armor);
-        armor = gem;
-        armor = new Gem(Quality.MEDIUM, Element.METAL, armor);
-        capability = armor.getCapability();
-        System.out.println(capability.getBase());
-        for(int a : capability.getElements()){
-            System.out.print(a+" ");
-        }
-        System.out.println();
-        for(GemValue gemValue: armor.getDecorators()){
-            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-        }
-        System.out.println(armor.getDecorators().size());
-
-        armor = EquipmentFactory.addGem(armor, new GemValue(Quality.MEDIUM, Element.WOOD));
-        capability = armor.getCapability();
-        System.out.println(capability.getBase());
-        for(int a : capability.getElements()){
-            System.out.print(a+" ");
-        }
-        System.out.println();
-        for(GemValue gemValue: armor.getDecorators()){
-            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-        }
-        System.out.println(armor.getDecorators().size());
-
-        armor = EquipmentFactory.removeArmorGem(armor, new GemValue(Quality.LOW, Element.WATER));
-        capability = armor.getCapability();
-        System.out.println(capability.getBase());
-        for(int a : capability.getElements()){
-            System.out.print(a+" ");
-        }
-        System.out.println();
-        for(GemValue gemValue: armor.getDecorators()){
-            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-        }
-        System.out.println(armor.getDecorators().size());
+        Capability capability = new Capability(100);
+        Capability copy = capability.clone();
+        copy.setBase(200);
+        copy.getElements()[3] = 100;
+        capability.show();
+        copy.show();
     }
 }

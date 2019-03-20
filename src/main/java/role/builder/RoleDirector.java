@@ -1,12 +1,17 @@
 package role.builder;
 
+import constant.Constant;
 import role.Role;
 
 /**
  * Created by PandaLin on 2019/3/19.
  */
-public class RoleDirector {
+public class RoleDirector implements Constant {
     private RoleBuilder builder;
+
+    public RoleDirector(){
+
+    }
 
     public RoleDirector(RoleBuilder builder) {
         this.builder = builder;

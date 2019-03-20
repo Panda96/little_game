@@ -1,5 +1,6 @@
 package role.builder;
 
+import constant.Constant;
 import constant.Element;
 import constant.EquipmentType;
 import constant.Quality;
@@ -8,6 +9,7 @@ import equipment.Equipment;
 import equipment.EquipmentFactory;
 import equipment.GemValue;
 import role.Bag;
+import role.Monster;
 
 import java.util.ArrayList;
 
@@ -15,12 +17,17 @@ import java.util.ArrayList;
  * Created by PandaLin on 2019/3/19.
  */
 public class MonsterBuilder extends RoleBuilder {
+
+    public MonsterBuilder() {
+        this.role = new Monster();
+    }
+
     public void setBasicInfo() {
-        role.setMaxLife(1000 + getRandomNum(1000));
+        role.setMaxLife(Constant.monsterInitialMaxLife + getRandomNum(Constant.monsterInitialMaxLife));
         role.setCurrentLife(role.getMaxLife());
         role.setBag(new Bag());
-        role.setMoney(100 + getRandomNum(100));
-        role.setExp(100 + getRandomNum(100));
+        role.setMoney(Constant.monsterInitialMoney + getRandomNum(Constant.monsterInitialMoney));
+        role.setExp(Constant.monsterInitialExp + getRandomNum(Constant.monsterInitialExp));
     }
 
     public void buildArmor() {
@@ -38,9 +45,9 @@ public class MonsterBuilder extends RoleBuilder {
     }
 
     public void buildBasicCapability() {
-        Capability capability = new Capability(10 + getRandomNum(10));
+        Capability capability = new Capability(Constant.monsterCapabilityBase + getRandomNum(Constant.monsterCapabilityBase));
         int[] elements = new int[5];
-        elements[getRandomElement().getType()] = getRandomNum(2 + getRandomNum(2));
+        elements[getRandomElement().getType()] = getRandomNum(Constant.monsterCapabilityElement + getRandomNum(Constant.monsterCapabilityElement));
         capability.setElements(elements);
         role.setBaseCapability(capability);
 

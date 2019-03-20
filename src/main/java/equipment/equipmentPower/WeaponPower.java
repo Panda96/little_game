@@ -3,7 +3,6 @@ package equipment.equipmentPower;
 import constant.Quality;
 import equipment.Capability;
 import equipment.Equipment;
-import equipment.equipmentPower.EquipmentPower;
 
 /**
  * Created by PandaLin on 2019/3/19.

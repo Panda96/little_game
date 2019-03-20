@@ -1,11 +1,13 @@
 package role;
 
-import equipment.*;
+import constant.Constant;
+import equipment.Capability;
+import equipment.Equipment;
 
 /**
  * Created by PandaLin on 2019/3/18.
  */
-public class Role {
+public abstract class Role implements Constant {
     int maxLife;
     int currentLife;
     int exp;
@@ -17,11 +19,23 @@ public class Role {
 
     Capability baseCapability;
 
-    public void attack() {
 
+    public abstract void attack();
+
+    public abstract void beAttacked();
+
+    public abstract Capability getAttackCapability();
+
+    public abstract Capability getDefenseCapability();
+
+
+    public int getLevel(){
+        return this.exp / Constant.ExpPerLevel;
     }
 
-    public void beAttacked() {
+
+    public boolean is_dead() {
+        return currentLife <= 0;
     }
 
     public int getMaxLife() {
