@@ -1,8 +1,10 @@
 package equipment;
 
+import constant.Element;
 import constant.EquipmentType;
 import constant.Quality;
 import equipment.weapon.*;
+import util.Generator;
 
 import java.util.List;
 
@@ -43,6 +45,12 @@ public class EquipmentFactory {
         }
 
         return null;
+    }
+
+    public static Gem createRandomGem(){
+        Element element = Generator.getRandomElement();
+        Quality quality = Generator.getRandomQuality();
+        return new Gem(quality, element);
     }
 
     public static Equipment addGem(Equipment equipment, GemValue gem) {

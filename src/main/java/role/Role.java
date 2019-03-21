@@ -20,19 +20,33 @@ public abstract class Role implements Constant {
     Capability baseCapability;
 
 
-    public abstract void attack();
+    public abstract void attack(Role role);
 
-    public abstract void beAttacked();
+    public void beAttacked(Capability attack){
+        Capability defense = getDefenseCapability();
+//        System.out.println("defense");
+//        defense.show();
+        attack.minus(defense);
+        currentLife -= attack.getBase();
+        currentLife -= attack.getElementPower();
 
-    public abstract Capability getAttackCapability();
-
-    public abstract Capability getDefenseCapability();
-
-
-    public int getLevel(){
-        return this.exp / Constant.ExpPerLevel;
     }
 
+    public Capability getDefenseCapability() {
+        Capability copyBase = this.baseCapability.clone();
+        copyBase.add(this.armor.getCapability());
+        return copyBase;
+    }
+
+    public Capability getAttackCapability() {
+        Capability copyBase = this.baseCapability.clone();
+        copyBase.add(this.weapon.getCapability());
+        return copyBase;
+    }
+
+    public int getLevel() {
+        return this.exp / Constant.ExpPerLevel;
+    }
 
     public boolean is_dead() {
         return currentLife <= 0;
@@ -100,6 +114,12 @@ public abstract class Role implements Constant {
 
     public void setBaseCapability(Capability baseCapability) {
         this.baseCapability = baseCapability;
+    }
+
+    public void show(String roleName){
+        System.out.println(roleName);
+        System.out.println("Life:"+currentLife+",\tMoney:"+ money+",\tExp:"+ exp);
+        bag.show();
     }
 
 }

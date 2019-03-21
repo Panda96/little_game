@@ -11,7 +11,7 @@ import java.util.List;
  */
 public abstract class Equipment {
     private Quality quality;
-    private List<GemValue> decorators;
+    private List<GemValue> decorators = new ArrayList<GemValue>();
     private EquipmentType type;
 
     public Equipment(Quality quality) {
@@ -21,7 +21,6 @@ public abstract class Equipment {
     public abstract Capability getCapability();
 
     public List<GemValue> getDecorators(){
-        this.decorators = new ArrayList<GemValue>();
         return decorators;
     }
 

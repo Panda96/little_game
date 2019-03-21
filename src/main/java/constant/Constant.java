@@ -20,7 +20,13 @@ public interface Constant {
 
     public static final int heroInitialExp = 0;
 
-    public static final int heroInitialMaxLife = 10000;
+    public static final int heroInitialMaxLife = 1500;
+
+    public static final int twoSkillLevel = 1;
+
+    public static final int threeSkillLevel = 2;
+
+    public static final int comboSkillLevel =3;
 
     public static final int monsterCapabilityBase = 10;
 
@@ -30,5 +36,9 @@ public interface Constant {
 
     public static final int monsterInitialExp = 100;
 
-    public static final int monsterInitialMaxLife = 1000;
+    public static final int monsterInitialMaxLife = 300;
+
+    public static final int moneyForEquipmentUpgrade = 100;
+
+
 }

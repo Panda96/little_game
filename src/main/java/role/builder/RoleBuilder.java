@@ -17,8 +17,9 @@ public abstract class RoleBuilder implements Constant {
 
     public abstract void buildWeapon();
 
-    public Role getRole() {
+    public Role getRole(){
         return role;
     }
+
 
 }

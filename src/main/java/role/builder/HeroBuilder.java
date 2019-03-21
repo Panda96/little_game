@@ -9,7 +9,10 @@ import role.Role;
  * Created by PandaLin on 2019/3/20.
  */
 public abstract class HeroBuilder extends RoleBuilder {
-    protected Role role = new Hero();
+
+    public HeroBuilder() {
+        this.role = new Hero();
+    }
 
     public void setBasicInfo() {
         role.setMaxLife(Constant.heroInitialMaxLife);
@@ -18,6 +21,10 @@ public abstract class HeroBuilder extends RoleBuilder {
         role.setExp(Constant.heroInitialExp);
         role.setMoney(Constant.heroInitialMoney);
 
+    }
+
+    public Role getRole(){
+        return role;
     }
 
 }

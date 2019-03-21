@@ -6,7 +6,7 @@ import java.util.SimpleTimeZone;
  * Created by PandaLin on 2019/3/20.
  */
 public enum SkillType {
-    FIRST(0), SECOND(1), THIRD(2);
+    FIRST(1), SECOND(2), THIRD(3);
 
     private int skillNumber;
 

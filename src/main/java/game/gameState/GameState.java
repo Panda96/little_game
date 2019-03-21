@@ -9,5 +9,5 @@ public interface GameState {
 
     public void monsterAttack();
 
-    public void createMonster();
+    public void prepare();
 }

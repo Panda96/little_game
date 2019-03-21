@@ -13,14 +13,21 @@ public class AttackHeroState implements GameState {
     }
 
     public void heroAttack() {
+        System.out.println("Not Hero Turn.");
 
     }
 
     public void monsterAttack() {
+        game.getMonster().attack(game.getHero());
+        if(game.getHero().is_dead()){
+            game.setState(game.getGameOverState());
+        }else{
+            game.setState(game.getGameInitialState());
+        }
 
     }
 
-    public void createMonster() {
-
+    public void prepare() {
+        System.out.println("Monster hasn't been defeated.");
     }
 }

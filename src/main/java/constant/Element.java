@@ -7,7 +7,7 @@ public enum Element {
     METAL(0), WOOD(1), WATER(2), FIRE(3), EARTH(4);
 
     private int type;
-    private Element(int type){
+    Element(int type){
         this.type = type;
     }
 

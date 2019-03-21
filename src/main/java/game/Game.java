@@ -11,10 +11,9 @@ import role.builder.RoleDirector;
 /**
  * Created by PandaLin on 2019/3/19.
  */
-public class Game {
+public class Game implements GameState{
     private GameState gameInitialState;
-    private GameState attackMonsterState;
-    private GameState attackheroState;
+    private GameState attackHeroState;
     private GameState gameOverState;
     private GameState nextMonsterState;
 
@@ -26,25 +25,54 @@ public class Game {
 
     public Game(HeroType heroType) {
         this.gameInitialState = new GameInitialState(this);
-        this.attackMonsterState = new AttackMonsterState(this);
-        this.attackheroState = new AttackHeroState(this);
+        this.attackHeroState = new AttackHeroState(this);
         this.gameOverState = new GameOverState(this);
         this.nextMonsterState = new NextMonsterState(this);
+
         initial(heroType);
+
         this.state = gameInitialState;
 
     }
 
-    public void initial(HeroType heroType){
-        heroType = HeroType.SHOOTER;
+    private void initial(HeroType heroType){
+
         BuilderFactory builderFactory = new BuilderFactory();
         RoleBuilder heroBuilder = builderFactory.getHeroBuilder(heroType);
         RoleDirector roleDirector = new RoleDirector(heroBuilder);
         this.hero = roleDirector.construct();
-        RoleBuilder monsterBuilder = builderFactory.getMonsterBuilder();
-        roleDirector.setBuilder(monsterBuilder);
-        this.monster = roleDirector.construct();
+        this.monster = createMonster();
 
+    }
+
+    public void heroAttack() {
+        state.heroAttack();
+    }
+
+    public void monsterAttack() {
+        state.monsterAttack();
+    }
+
+    public void prepare() {
+        state.prepare();
+    }
+
+    public Role createMonster(){
+        BuilderFactory builderFactory = new BuilderFactory();
+        RoleBuilder monsterBuilder = builderFactory.getMonsterBuilder();
+        RoleDirector roleDirector = new RoleDirector(monsterBuilder);
+        roleDirector.setBuilder(monsterBuilder);
+        return roleDirector.construct();
+    }
+
+
+
+    public void setState(GameState state){
+        this.state = state;
+    }
+
+    public GameState getState() {
+        return state;
     }
 
     public Role getHero() {
@@ -62,4 +90,28 @@ public class Game {
     public void setMonster(Role monster) {
         this.monster = monster;
     }
+
+    public GameState getGameInitialState() {
+        return gameInitialState;
+    }
+
+    public GameState getAttackHeroState() {
+        return attackHeroState;
+    }
+
+    public GameState getGameOverState() {
+        return gameOverState;
+    }
+
+    public GameState getNextMonsterState() {
+        return nextMonsterState;
+    }
+
+    public void show(){
+        hero.show("hero");
+        monster.show("monster");
+        System.out.println("----------------------------------------------");
+    }
+
+
 }

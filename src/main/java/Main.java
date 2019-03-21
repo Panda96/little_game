@@ -1,7 +1,9 @@
 import com.sun.xml.internal.messaging.saaj.soap.impl.ElementFactory;
 import constant.Element;
+import constant.HeroType;
 import constant.Quality;
 import equipment.*;
+import game.Game;
 
 import java.util.List;
 
@@ -10,73 +12,23 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-//        Gem gemCoefficient = new Gem(Quality.LOW, Element.WATER);
-//        Capability capability = gemCoefficient.getCapability();
-//        System.out.println(capability.getBase());
-//        for(int a : capability.getElements()){
-//            System.out.print(a+" ");
-//        }
-//        System.out.println();
-//        for(GemValue gemValue: gemCoefficient.getDecorators()){
-//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-//        }
-//        System.out.println(gemCoefficient.getDecorators().size());
-//
-//        Equipment armorCoefficient = new Armor(Quality.HIGH);
-//        System.out.println(capability.getBase());
-//        for(int a : capability.getElements()){
-//            System.out.print(a+" ");
-//        }
-//        System.out.println();
-//        for(GemValue gemValue: armorCoefficient.getDecorators()){
-//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-//        }
-//        System.out.println(armorCoefficient.getDecorators().size());
-//
-//
-//        gemCoefficient.setEquipment(armorCoefficient);
-//        armorCoefficient = gemCoefficient;
-//        armorCoefficient = new Gem(Quality.MEDIUM, Element.METAL, armorCoefficient);
-//        capability = armorCoefficient.getCapability();
-//        System.out.println(capability.getBase());
-//        for(int a : capability.getElements()){
-//            System.out.print(a+" ");
-//        }
-//        System.out.println();
-//        for(GemValue gemValue: armorCoefficient.getDecorators()){
-//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-//        }
-//        System.out.println(armorCoefficient.getDecorators().size());
-//
-//        armorCoefficient = EquipmentFactory.addGem(armorCoefficient, new GemValue(Quality.MEDIUM, Element.WOOD));
-//        capability = armorCoefficient.getCapability();
-//        System.out.println(capability.getBase());
-//        for(int a : capability.getElements()){
-//            System.out.print(a+" ");
-//        }
-//        System.out.println();
-//        for(GemValue gemValue: armorCoefficient.getDecorators()){
-//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-//        }
-//        System.out.println(armorCoefficient.getDecorators().size());
-//
-//        armorCoefficient = EquipmentFactory.removeArmorGem(armorCoefficient, new GemValue(Quality.LOW, Element.WATER));
-//        capability = armorCoefficient.getCapability();
-//        System.out.println(capability.getBase());
-//        for(int a : capability.getElements()){
-//            System.out.print(a+" ");
-//        }
-//        System.out.println();
-//        for(GemValue gemValue: armorCoefficient.getDecorators()){
-//            System.out.print(gemValue.getElement().getType()+" "+ gemValue.getQuality()+ "; ");
-//        }
-//        System.out.println(armorCoefficient.getDecorators().size());
+        Game game = new Game(HeroType.SHOOTER);
+        game.show();
 
-        Capability capability = new Capability(100);
-        Capability copy = capability.clone();
-        copy.setBase(200);
-        copy.getElements()[3] = 100;
-        capability.show();
-        copy.show();
+        while(!(game.getState().equals(game.getGameOverState()))){
+            game.heroAttack();
+            game.monsterAttack();
+            game.show();
+            game.prepare();
+            System.out.println("----------------------------------------------------");
+        }
+//        int i = 0;
+//        while (i<5) {
+//            game.heroAttack();
+//            game.monsterAttack();
+//            game.show();
+//            game.prepare();
+//            i+=1;
+//        }
     }
 }

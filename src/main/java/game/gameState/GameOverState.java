@@ -13,14 +13,15 @@ public class GameOverState implements GameState {
     }
 
     public void heroAttack() {
+        System.out.println("Game Over");
 
     }
 
     public void monsterAttack() {
-
+        System.out.println("Game Over");
     }
 
-    public void createMonster() {
-
+    public void prepare() {
+        System.out.println("Game Over");
     }
 }
