@@ -22,6 +22,7 @@ public class RoleDirector implements Constant {
     }
 
     public Role construct(){
+        builder.setImageInfo();
         builder.setBasicInfo();
         builder.buildArmor();
         builder.buildWeapon();

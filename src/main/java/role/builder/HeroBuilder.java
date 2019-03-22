@@ -23,8 +23,5 @@ public abstract class HeroBuilder extends RoleBuilder {
 
     }
 
-    public Role getRole(){
-        return role;
-    }
 
 }

@@ -4,7 +4,9 @@ import constant.HeroType;
 import constant.Quality;
 import equipment.*;
 import game.Game;
+import game.GameFrame;
 
+import javax.swing.*;
 import java.util.List;
 
 /**
@@ -12,23 +14,22 @@ import java.util.List;
  */
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game(HeroType.SHOOTER);
-        game.show();
-
-        while(!(game.getState().equals(game.getGameOverState()))){
-            game.heroAttack();
-            game.monsterAttack();
-            game.show();
-            game.prepare();
-            System.out.println("----------------------------------------------------");
-        }
-//        int i = 0;
-//        while (i<5) {
-//            game.heroAttack();
-//            game.monsterAttack();
-//            game.show();
-//            game.prepare();
-//            i+=1;
+        GameFrame gf = new GameFrame();
+//        Equipment armor = new Armor(Quality.LOW);
+//        Equipment temp1 = new Gem(Quality.HIGH, Element.METAL, armor);
+//        Equipment temp2 = new Gem(Quality.MEDIUM, Element.WOOD, temp1);
+//
+//        List<GemValue> decorators = temp2.getDecorators();
+//        for(GemValue gm:decorators){
+//            System.out.println(gm.toString());
 //        }
+//        EquipComponents split = ((Gem) temp2).split();
+//
+//        for(GemValue gm:split.getGems()){
+//            System.out.println(gm.toString());
+//        }
+
+
+
     }
 }

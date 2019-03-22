@@ -1,6 +1,9 @@
 package game.gameState;
 
+import constant.SkillType;
 import game.Game;
+
+import java.util.List;
 
 /**
  * Created by PandaLin on 2019/3/19.
@@ -12,8 +15,8 @@ public class GameInitialState implements GameState{
         this.game = game;
     }
 
-    public void heroAttack() {
-        game.getHero().attack(game.getMonster());
+    public void heroAttack(List<SkillType> sklls) {
+        game.getHero().attack(game.getMonster(), sklls);
         if(game.getMonster().is_dead()){
             game.setState(game.getNextMonsterState());
         }else{

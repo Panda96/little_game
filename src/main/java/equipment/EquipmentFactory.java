@@ -14,7 +14,7 @@ import java.util.List;
 public class EquipmentFactory {
     public static Equipment createArmor(Quality armorQuality, List<GemValue> decorators) {
         Equipment armor = new Armor(armorQuality);
-
+//        System.out.println(decorators.size());
         if (decorators.size() <= 5) {
             for (GemValue gem : decorators) {
                 armor = new Gem(gem.getQuality(), gem.getElement(), armor);

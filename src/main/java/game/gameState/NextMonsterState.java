@@ -1,8 +1,11 @@
 package game.gameState;
 
+import constant.SkillType;
 import game.Game;
 import role.Hero;
 import role.Role;
+
+import java.util.List;
 
 /**
  * Created by PandaLin on 2019/3/19.
@@ -14,7 +17,7 @@ public class NextMonsterState implements GameState{
         this.game = game;
     }
 
-    public void heroAttack() {
+    public void heroAttack(List<SkillType> skills) {
         System.out.println("Hero is preparing.");
     }
 

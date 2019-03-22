@@ -2,6 +2,7 @@ package role;
 
 
 import constant.Constant;
+import constant.EquipmentType;
 import constant.Quality;
 import constant.SkillType;
 import equipment.*;
@@ -44,25 +45,54 @@ public class Hero extends Role {
     }
 
     public void addEquipGem(Equipment equipment, int BagGemId){
+
         Gem equip = (Gem)equipment;
         EquipComponents components = equip.split();
+        components.showGems();
         List<GemValue> gems = components.getGems();
         List<GemValue> bagGems = bag.getGems();
         GemValue gv = bagGems.get(BagGemId);
         if(gems.size()<5){
             gems.add(gv);
-            equipment = components.assemble();
+            components.setGems(gems);
+
+            if(components.getEquipment().getType().equals(EquipmentType.ARMOR)){
+                setArmor(components.assemble());
+                Equipment eqip = getArmor();
+                ((Gem)eqip).split().showGems();
+            }else{
+                setWeapon(components.assemble());
+            }
+
+            bagGems.remove(BagGemId);
+        }else{
+            System.out.println("最多装5个宝石");
         }
+
+
+//        return this;
     }
 
     public void removeEquipGem(Equipment equipment, int gemId){
+
         Gem equip = (Gem)equipment;
         EquipComponents components = equip.split();
         List<GemValue> gems = components.getGems();
         if(gems.size() > 1){
+            GemValue gm = gems.get(gemId);
+            getBag().addGem(gm);
             gems.remove(gemId);
-            equipment = components.assemble();
+        }else{
+            System.out.println("至少装备1个宝石");
         }
+        Equipment quip = components.assemble();
+        if(components.getEquipment().getType().equals(EquipmentType.ARMOR)){
+            setArmor(quip);
+        }else{
+            setWeapon(quip);
+        }
+
+//        return this;
 
     }
 
@@ -98,9 +128,9 @@ public class Hero extends Role {
     }
 
 
-    public void attack(Role role) {
+    public void attack(Role role, List<SkillType> skills) {
 
-        List<SkillType> skills = state.chooseSkill();
+//        List<SkillType> skills = state.chooseSkill();
         Capability attack = getSkillCapability(skills);
         System.out.println("Hero Attack");
 //        attack.show();

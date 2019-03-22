@@ -36,6 +36,7 @@ public class Bag {
 
     public int sellAll() {
         int cost = gems.size();
+        gems = new ArrayList<GemValue>();
         return cost;
 
     }
@@ -44,12 +45,12 @@ public class Bag {
         return gems;
     }
 
-    public void show(){
+    public String toString(){
 //        System.out.println("Bag:");
-        System.out.print("gems:");
+        String gems_str = "";
         for(GemValue gem:gems){
-            System.out.print("("+gem.getElement()+",\t"+gem.getQuality()+") ");
+            gems_str+=(gem.toString()+" ");
         }
-        System.out.println();
+        return gems_str;
     }
 }

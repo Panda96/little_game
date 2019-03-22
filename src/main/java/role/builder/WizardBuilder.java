@@ -5,6 +5,14 @@ package role.builder;
  */
 public class WizardBuilder extends HeroBuilder{
 
+    public void setImageInfo() {
+        role.setX(300);
+        role.setY(215);
+        role.setWidth(105);
+        role.setHeight(120);
+        role.setImage_path(wizard_path);
+    }
+
     public void buildBasicCapability() {
 
     }

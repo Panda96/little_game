@@ -23,15 +23,15 @@ public class HeroComboState implements RoleState, Constant {
         int level = hero.getLevel();
     }
 
-    public List<SkillType> chooseSkill() {
-        List<SkillType> attackSkills = new ArrayList<SkillType>();
-        List<SkillType> skills = hero.getSkills();
-        int skillId1 = Generator.getRandomNum(skills.size());
-        int skillId2 = Generator.getRandomNum(skills.size());
-        attackSkills.add(skills.get(skillId1));
-        attackSkills.add(skills.get(skillId2));
-        return attackSkills;
-    }
+//    public List<SkillType> chooseSkill() {
+//        List<SkillType> attackSkills = new ArrayList<SkillType>();
+//        List<SkillType> skills = hero.getSkills();
+//        int skillId1 = Generator.getRandomNum(skills.size());
+//        int skillId2 = Generator.getRandomNum(skills.size());
+//        attackSkills.add(skills.get(skillId1));
+//        attackSkills.add(skills.get(skillId2));
+//        return attackSkills;
+//    }
 
 
 }

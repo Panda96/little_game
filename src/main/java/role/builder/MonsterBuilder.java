@@ -29,6 +29,14 @@ public class MonsterBuilder extends RoleBuilder {
         role.setExp(Constant.monsterInitialExp + Generator.getRandomNum(Constant.monsterInitialExp));
     }
 
+    public void setImageInfo() {
+        role.setX(1050);
+        role.setY(215);
+        role.setWidth(115);
+        role.setHeight(130);
+        role.setImage_path(Constant.monster_path);
+    }
+
     public void buildArmor() {
         ArrayList<GemValue> gemValues = new ArrayList<GemValue>();
         Equipment armor = EquipmentFactory.createArmor(Quality.NONE, gemValues);

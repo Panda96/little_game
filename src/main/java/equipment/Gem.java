@@ -43,29 +43,30 @@ public class Gem extends EquipmentDecorator {
     }
 
     public List<GemValue> getDecorators() {
-        List<GemValue> decorators;
-        if (equipment == null) {
-            decorators =  new ArrayList<GemValue>();
-        }else{
-            decorators = equipment.getDecorators();
-        }
-        GemValue gemValue = new GemValue(getQuality(), getElement());
-        decorators.add(gemValue);
-        return decorators;
+        EquipComponents split = split();
+        return split.getGems();
     }
 
     public EquipComponents split(){
         EquipComponents equipComponents = new EquipComponents();
-        List<GemValue> decorators = getDecorators();
-        equipComponents.setGems(decorators);
-        Equipment equipment = this.equipment;
-        while (equipment.getDecorators().size() > 0){
-            Gem temp = (Gem)equipment;
-            equipment = temp.equipment;
+        List<GemValue> decorators = new ArrayList<GemValue>();
+
+        Equipment equip = this;
+        while(equip.getClass().toString().equals("class equipment.Gem")){
+            Gem temp = (Gem)equip;
+            decorators.add(temp.getGemValue());
+            equip = temp.equipment;
+
+
         }
-        equipComponents.setEquipment(equipment);
+        equipComponents.setEquipment(equip);
+        equipComponents.setGems(decorators);
         return equipComponents;
 
+    }
+
+    public GemValue getGemValue(){
+        return new GemValue(getQuality(), getElement());
     }
 
     public Equipment getEquipment() {
@@ -74,6 +75,7 @@ public class Gem extends EquipmentDecorator {
 
     public void setEquipment(Equipment equipment) {
         this.equipment = equipment;
+        equipment.getDecorators().add(new GemValue(getQuality(), getElement()));
     }
 
     public Element getElement() {

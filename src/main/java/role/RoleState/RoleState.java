@@ -11,5 +11,5 @@ import java.util.List;
 public interface RoleState {
     public void upgrade(int exp);
 
-    public List<SkillType> chooseSkill();
+//    public List<SkillType> chooseSkill();
 }

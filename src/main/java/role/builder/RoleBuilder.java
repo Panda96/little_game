@@ -11,6 +11,8 @@ public abstract class RoleBuilder implements Constant {
 
     public abstract void setBasicInfo();
 
+    public abstract void setImageInfo();
+
     public abstract void buildBasicCapability();
 
     public abstract void buildArmor();

@@ -30,4 +30,8 @@ public class GemValue {
     public void setElement(Element element) {
         this.element = element;
     }
+
+    public String toString(){
+        return (this.element.getName() + (this.quality.toString()).charAt(0));
+    }
 }

@@ -34,4 +34,11 @@ public class EquipComponents {
         }
         return equip;
     }
+
+    public void showGems(){
+        for(GemValue gm:gems){
+            System.out.print(gm.toString()+" ");
+        }
+        System.out.println();
+    }
 }

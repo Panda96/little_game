@@ -1,26 +1,33 @@
 package role;
 
 import constant.Constant;
+import constant.SkillType;
 import equipment.Capability;
 import equipment.Equipment;
+
+import java.util.List;
 
 /**
  * Created by PandaLin on 2019/3/18.
  */
 public abstract class Role implements Constant {
+    int x;
+    int y;
+    int width;
+    int height;
+    String image_path;
     int maxLife;
     int currentLife;
     int exp;
     int money;
     Equipment armor;
     Equipment weapon;
-
     Bag bag;
 
     Capability baseCapability;
 
 
-    public abstract void attack(Role role);
+    public abstract void attack(Role role, List<SkillType> skills);
 
     public void beAttacked(Capability attack){
         Capability defense = getDefenseCapability();
@@ -119,7 +126,46 @@ public abstract class Role implements Constant {
     public void show(String roleName){
         System.out.println(roleName);
         System.out.println("Life:"+currentLife+",\tMoney:"+ money+",\tExp:"+ exp);
-        bag.show();
+        System.out.println(bag.toString());
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public void setImage_path(String image_path) {
+        this.image_path = image_path;
+    }
+
+    public String getImage_path() {
+        return image_path;
+    }
 }
