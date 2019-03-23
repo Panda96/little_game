@@ -84,6 +84,9 @@ public class RoleChoosePanel extends Console implements ActionListener {
         mainPanel.add(gamePanel,"1");
         frame.getMainCard().show(mainPanel, "1");
 
+        Thread t = new Thread(gamePanel);
+        t.start();
+
         GameControlPanel gameControlPanel = new GameControlPanel(game, frame);
         frame.setGameControlPanel(gameControlPanel);
         JPanel console = frame.getConsole();

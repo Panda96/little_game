@@ -1,7 +1,9 @@
 package game.gameState;
 
 import constant.SkillType;
+import equipment.Capability;
 import game.Game;
+import role.Role;
 
 import java.util.List;
 
@@ -15,12 +17,21 @@ public class GameOverState implements GameState {
         this.game = game;
     }
 
-    public void heroAttack(List<SkillType> skills) {
+    public Capability heroAttack() {
         System.out.println("Game Over");
-
+        return null;
     }
 
-    public void monsterAttack() {
+    public void monsterBeAttacked(Capability hero_attack) {
+        System.out.println("Game Over");
+    }
+
+    public Capability monsterAttack() {
+        System.out.println("Game Over");
+        return null;
+    }
+
+    public void heroBeAttacked(Capability monster_attack) {
         System.out.println("Game Over");
     }
 

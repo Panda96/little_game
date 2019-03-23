@@ -10,5 +10,6 @@ public class Sword extends Weapon{
     public Sword(Quality quality) {
         super(quality);
         this.setType(EquipmentType.SWORD);
+        this.setWeaponBehavior(new SwordBehavior());
     }
 }

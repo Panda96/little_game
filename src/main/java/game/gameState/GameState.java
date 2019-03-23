@@ -1,17 +1,20 @@
 package game.gameState;
 
-import constant.SkillType;
 
-import java.util.List;
+import equipment.Capability;
 
 /**
  * Created by PandaLin on 2019/3/19.
  */
 public interface GameState {
 
-    public void heroAttack(List<SkillType> skills);
+    public Capability heroAttack();
 
-    public void monsterAttack();
+    public void monsterBeAttacked(Capability hero_attack);
+
+    public Capability monsterAttack();
+
+    public void heroBeAttacked(Capability monster_attack);
 
     public void prepare();
 }

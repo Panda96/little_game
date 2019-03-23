@@ -1,6 +1,7 @@
 package game.gameState;
 
 import constant.SkillType;
+import equipment.Capability;
 import game.Game;
 import role.Hero;
 import role.Role;
@@ -17,11 +18,21 @@ public class NextMonsterState implements GameState{
         this.game = game;
     }
 
-    public void heroAttack(List<SkillType> skills) {
+    public Capability heroAttack() {
+        System.out.println("Hero is preparing.");
+        return null;
+    }
+
+    public void monsterBeAttacked(Capability hero_attack) {
         System.out.println("Hero is preparing.");
     }
 
-    public void monsterAttack() {
+    public Capability monsterAttack() {
+        System.out.println("Monster hasn't wake up.");
+        return null;
+    }
+
+    public void heroBeAttacked(Capability monster_attack) {
         System.out.println("Monster hasn't wake up.");
     }
 

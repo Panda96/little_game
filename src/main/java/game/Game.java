@@ -1,7 +1,7 @@
 package game;
 
 import constant.HeroType;
-import constant.SkillType;
+import equipment.Capability;
 import game.gameState.*;
 import game.mainPanel.MainPanel;
 import role.Role;
@@ -10,7 +10,6 @@ import role.builder.RoleBuilder;
 import role.builder.RoleDirector;
 
 import javax.swing.*;
-import java.util.List;
 
 
 /**
@@ -53,20 +52,28 @@ public class Game implements GameState {
 
     }
 
-    public void heroAttack(List<SkillType> skills) {
-        state.heroAttack(skills);
+
+    public Capability heroAttack() {
+        return state.heroAttack();
     }
 
-    public void monsterAttack() {
-        state.monsterAttack();
+    public void monsterBeAttacked(Capability hero_attack) {
+        state.monsterBeAttacked(hero_attack);
+    }
+
+    public Capability monsterAttack() {
+        return state.monsterAttack();
+    }
+
+    public void heroBeAttacked(Capability monster_attack) {
+        state.heroBeAttacked(monster_attack);
     }
 
     public void prepare() {
         state.prepare();
     }
 
-    public Role
-    createMonster() {
+    public Role createMonster() {
         BuilderFactory builderFactory = new BuilderFactory();
         RoleBuilder monsterBuilder = builderFactory.getMonsterBuilder();
         RoleDirector roleDirector = new RoleDirector(monsterBuilder);
@@ -83,7 +90,7 @@ public class Game implements GameState {
     }
 
 
-    public void run(){
+    public void run() {
         JFrame frame = new JFrame("Little Game");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JPanel panel = null;

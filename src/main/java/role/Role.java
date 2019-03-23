@@ -27,12 +27,10 @@ public abstract class Role implements Constant {
     Capability baseCapability;
 
 
-    public abstract void attack(Role role, List<SkillType> skills);
+    public abstract Capability attack(Role role);
 
     public void beAttacked(Capability attack){
         Capability defense = getDefenseCapability();
-//        System.out.println("defense");
-//        defense.show();
         attack.minus(defense);
         currentLife -= attack.getBase();
         currentLife -= attack.getElementPower();

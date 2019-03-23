@@ -10,5 +10,6 @@ public class Wand extends Weapon {
     public Wand(Quality quality) {
         super(quality);
         this.setType(EquipmentType.WAND);
+        this.setWeaponBehavior(new WandBehavior());
     }
 }

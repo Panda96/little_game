@@ -10,5 +10,6 @@ public class Stick extends Weapon {
     public Stick(Quality quality) {
         super(quality);
         this.setType(EquipmentType.STICK);
+        this.setWeaponBehavior(new StickBehavior());
     }
 }

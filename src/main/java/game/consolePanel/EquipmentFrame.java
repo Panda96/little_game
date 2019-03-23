@@ -23,23 +23,24 @@ public class EquipmentFrame extends JFrame implements ActionListener {
     JFrame that;
     HeroPanel heroPanel;
 
-    JPanel head, equipped, bag, confirm_panel;
-    //    JButton upgrade;
-    JButton confirm;
-    JLabel head_title;
+    JPanel head,mainEquip, equipped, bag, confirm_panel;
+    JButton upgrade, confirm;
+    JLabel head_title, equip_quality;
 
     public EquipmentFrame(Hero hero, HeroPanel heroPanel) {
         this.hero = hero;
         this.heroPanel = heroPanel;
         that = this;
 
-        this.setLayout(new GridLayout(4, 1));
-        this.setSize(400, 300);
+        this.setLayout(new GridLayout(5, 1));
+        this.setSize(400, 400);
         this.setLocationRelativeTo(null);
         this.setVisible(false);
 
         head = new JPanel();
         head.setBackground(Color.WHITE);
+        mainEquip = new JPanel();
+        mainEquip.setBackground(Color.WHITE);
         equipped = new JPanel();
         equipped.setBackground(Color.WHITE);
         equipped.setAlignmentX(FlowLayout.LEFT);
@@ -49,7 +50,11 @@ public class EquipmentFrame extends JFrame implements ActionListener {
         confirm_panel = new JPanel();
         confirm_panel.setBackground(Color.WHITE);
 
-//        upgrade = new JButton("升级");
+        equip_quality = new JLabel();
+        upgrade = new JButton("升级");
+        upgrade.addActionListener(new UpgradeEquip());
+        mainEquip.add(equip_quality);
+        mainEquip.add(upgrade);
 
         head_title = new JLabel();
         head.add(head_title);
@@ -59,6 +64,7 @@ public class EquipmentFrame extends JFrame implements ActionListener {
         confirm_panel.add(confirm);
 
         this.add(head);
+        this.add(mainEquip);
         this.add(equipped);
         this.add(bag);
         this.add(confirm_panel);
@@ -86,8 +92,10 @@ public class EquipmentFrame extends JFrame implements ActionListener {
         Gem gem = (Gem) equipment;
         EquipComponents split = gem.split();
 
-        System.out.println("gems:"+split.getGems().size());
-        split.showGems();
+        equip_quality.setText("等级："+split.getEquipment().getQuality().toString().charAt(0));
+
+//        System.out.println("gems:"+split.getGems().size());
+//        split.showGems();
 
         List<GemValue> gems = split.getGems();
 
@@ -148,6 +156,23 @@ public class EquipmentFrame extends JFrame implements ActionListener {
         public void actionPerformed(ActionEvent e) {
 
             that.setVisible(false);
+        }
+    }
+
+    class UpgradeEquip implements ActionListener{
+
+        public void actionPerformed(ActionEvent e) {
+            hero.strengthenEquip(equipment);
+            if(type.equals(EquipmentType.ARMOR)){
+                equipment = hero.getArmor();
+            }else{
+                equipment = hero.getWeapon();
+            }
+            Gem gem = (Gem)equipment;
+            equip_quality.setText("等级："+gem.split().getEquipment().getQuality().toString().charAt(0));
+
+            heroPanel.update();
+
         }
     }
 }

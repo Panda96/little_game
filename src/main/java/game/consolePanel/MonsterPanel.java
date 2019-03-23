@@ -20,17 +20,17 @@ public class MonsterPanel extends JPanel implements Constant {
         this.setBackground(Color.WHITE);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         m_name = new JLabel();
-        m_name.setFont(Constant.header_fond);
+        m_name.setFont(Constant.header_font);
         m_capability = new JLabel();
-        m_capability.setFont(Constant.normal_fond);
+        m_capability.setFont(Constant.normal_font);
         m_level = new JLabel();
-        m_level.setFont(Constant.normal_fond);
+        m_level.setFont(Constant.normal_font);
         m_life = new JLabel();
-        m_life.setFont(Constant.normal_fond);
+        m_life.setFont(Constant.normal_font);
         m_money = new JLabel();
-        m_money.setFont(Constant.normal_fond);
+        m_money.setFont(Constant.normal_font);
         m_gem = new JLabel();
-        m_gem.setFont(Constant.normal_fond);
+        m_gem.setFont(Constant.normal_font);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(m_name);

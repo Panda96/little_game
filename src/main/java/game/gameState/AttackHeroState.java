@@ -1,10 +1,7 @@
 package game.gameState;
 
-import constant.SkillType;
+import equipment.Capability;
 import game.Game;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by PandaLin on 2019/3/19.
@@ -16,12 +13,39 @@ public class AttackHeroState implements GameState {
         this.game = game;
     }
 
-    public void heroAttack(List<SkillType> skills) {
+    public Capability heroAttack(Capability attack) {
         System.out.println("Not Hero Turn.");
+        return null;
     }
 
-    public void monsterAttack() {
-        game.getMonster().attack(game.getHero(), new ArrayList<SkillType>());
+    public Capability monsterAttack(Capability attack) {
+        Capability monster_attack = game.getMonster().attack(game.getHero());
+        if(game.getHero().is_dead()){
+            game.setState(game.getGameOverState());
+        }else{
+            game.setState(game.getGameInitialState());
+        }
+
+        return monster_attack;
+    }
+
+    public Capability heroAttack() {
+        System.out.println("Not Hero Turn.");
+        return null;
+    }
+
+    public void monsterBeAttacked(Capability hero_attack) {
+        System.out.println("Not Hero Turn.");
+
+    }
+
+    public Capability monsterAttack() {
+        Capability monster_attack = game.getMonster().attack(game.getHero());
+        return monster_attack;
+    }
+
+    public void heroBeAttacked(Capability monster_attack) {
+        game.getHero().beAttacked(monster_attack);
         if(game.getHero().is_dead()){
             game.setState(game.getGameOverState());
         }else{

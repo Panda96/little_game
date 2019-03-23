@@ -1,7 +1,9 @@
 package game.gameState;
 
 import constant.SkillType;
+import equipment.Capability;
 import game.Game;
+import role.Role;
 
 import java.util.List;
 
@@ -15,8 +17,15 @@ public class GameInitialState implements GameState{
         this.game = game;
     }
 
-    public void heroAttack(List<SkillType> sklls) {
-        game.getHero().attack(game.getMonster(), sklls);
+
+    public Capability heroAttack() {
+        Capability hero_attack = game.getHero().attack(game.getMonster());
+
+        return hero_attack;
+    }
+
+    public void monsterBeAttacked(Capability hero_attack) {
+        game.getMonster().beAttacked(hero_attack);
         if(game.getMonster().is_dead()){
             game.setState(game.getNextMonsterState());
         }else{
@@ -25,7 +34,12 @@ public class GameInitialState implements GameState{
 
     }
 
-    public void monsterAttack() {
+    public Capability monsterAttack() {
+        System.out.println("Not Monster Turn.");
+        return null;
+    }
+
+    public void heroBeAttacked(Capability monster_attack) {
         System.out.println("Not Monster Turn.");
 
     }

@@ -6,7 +6,12 @@ import constant.EquipmentType;
 import constant.Quality;
 import constant.SkillType;
 import equipment.*;
+import equipment.weapon.Weapon;
 import role.RoleState.*;
+import role.skills.SingleSkill;
+import role.skills.Skill;
+import util.ImageHelper;
+import util.ImageInfo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +28,11 @@ public class Hero extends Role {
 
     private List<SkillType> skills;
 
+    private List<Attack> atks;
+
+    private Skill currentSkill;
+
+
     public Hero() {
         this.heroComboState = new HeroComboState(this);
         this.heroThreeSkillsState = new HeroThreeSkillsState(this);
@@ -32,40 +42,43 @@ public class Hero extends Role {
         this.skills.add(SkillType.FIRST);
         this.state = this.heroOneSkillState;
 
+        this.currentSkill = new SingleSkill(SkillType.FIRST);
+        this.atks = new ArrayList<Attack>();
+
     }
 
-    public void upgrade(int exp){
+    public void upgrade(int exp) {
         state.upgrade(exp);
     }
 
-    public void pickup(Role role){
+    public void pickup(Role role) {
         this.money += role.getMoney();
         this.bag.addGems(role.getBag().getGems());
 
     }
 
-    public void addEquipGem(Equipment equipment, int BagGemId){
+    public void addEquipGem(Equipment equipment, int BagGemId) {
 
-        Gem equip = (Gem)equipment;
+        Gem equip = (Gem) equipment;
         EquipComponents components = equip.split();
         components.showGems();
         List<GemValue> gems = components.getGems();
         List<GemValue> bagGems = bag.getGems();
         GemValue gv = bagGems.get(BagGemId);
-        if(gems.size()<5){
+        if (gems.size() < 5) {
             gems.add(gv);
             components.setGems(gems);
 
-            if(components.getEquipment().getType().equals(EquipmentType.ARMOR)){
+            if (components.getEquipment().getType().equals(EquipmentType.ARMOR)) {
                 setArmor(components.assemble());
                 Equipment eqip = getArmor();
-                ((Gem)eqip).split().showGems();
-            }else{
+                ((Gem) eqip).split().showGems();
+            } else {
                 setWeapon(components.assemble());
             }
 
             bagGems.remove(BagGemId);
-        }else{
+        } else {
             System.out.println("最多装5个宝石");
         }
 
@@ -73,22 +86,22 @@ public class Hero extends Role {
 //        return this;
     }
 
-    public void removeEquipGem(Equipment equipment, int gemId){
+    public void removeEquipGem(Equipment equipment, int gemId) {
 
-        Gem equip = (Gem)equipment;
+        Gem equip = (Gem) equipment;
         EquipComponents components = equip.split();
         List<GemValue> gems = components.getGems();
-        if(gems.size() > 1){
+        if (gems.size() > 1) {
             GemValue gm = gems.get(gemId);
             getBag().addGem(gm);
             gems.remove(gemId);
-        }else{
+        } else {
             System.out.println("至少装备1个宝石");
         }
         Equipment quip = components.assemble();
-        if(components.getEquipment().getType().equals(EquipmentType.ARMOR)){
+        if (components.getEquipment().getType().equals(EquipmentType.ARMOR)) {
             setArmor(quip);
-        }else{
+        } else {
             setWeapon(quip);
         }
 
@@ -96,14 +109,14 @@ public class Hero extends Role {
 
     }
 
-    public void strengthenEquipGem(Equipment equipment, int gemId){
-        Gem equip = (Gem)equipment;
+    public void strengthenEquipGem(Equipment equipment, int gemId) {
+        Gem equip = (Gem) equipment;
         EquipComponents components = equip.split();
         List<GemValue> gems = components.getGems();
         GemValue gem = gems.get(gemId);
         Quality quality = gem.getQuality();
         int qualityId = quality.getId();
-        if(qualityId < Quality.HIGH.getId()){
+        if (qualityId < Quality.HIGH.getId()) {
             qualityId += 1;
             this.money -= Constant.moneyForEquipmentUpgrade;
             gem.setQuality(Quality.getQualityById(qualityId));
@@ -112,50 +125,83 @@ public class Hero extends Role {
 
     }
 
-    public void strengthenEquip(Equipment equipment){
-        Gem equip = (Gem)equipment;
+    public void strengthenEquip(Equipment equipment) {
+        Gem equip = (Gem) equipment;
         EquipComponents components = equip.split();
         Equipment weapon = components.getEquipment();
         Quality quality = weapon.getQuality();
         int qualityId = quality.getId();
-        if(qualityId < Quality.HIGH.getId()){
+        if (qualityId < Quality.HIGH.getId()) {
             qualityId += 1;
             this.money -= Constant.moneyForEquipmentUpgrade;
             weapon.setQuality(Quality.getQualityById(qualityId));
-            equipment = components.assemble();
+            Equipment equi = components.assemble();
+            if (weapon.getType().equals(EquipmentType.ARMOR)) {
+                setArmor(equi);
+            } else {
+                setWeapon(equi);
+            }
+        } else {
+            System.out.println("已经到顶级了");
         }
 
     }
 
 
-    public void attack(Role role, List<SkillType> skills) {
+    public Capability attack(Role role) {
 
-//        List<SkillType> skills = state.chooseSkill();
-        Capability attack = getSkillCapability(skills);
+        atks = new ArrayList<Attack>();
+        Gem gem = (Gem) getWeapon();
+        Weapon weapon = (Weapon) gem.split().getEquipment();
+        ImageInfo imgInfo = weapon.useWeapon();
+        int attackTimes = currentSkill.execute();
+
+        int x = getX() + getWidth();
+        int y = ImageHelper.getCenterPosition(getY(), getHeight(), imgInfo.getHeight()+(attackTimes-1)*50);
+
+        atks = new ArrayList<Attack>();
+        for (int i = 0; i < attackTimes; i++) {
+            Attack atk = new Attack(x, y + 50 * i, imgInfo, role, true);
+            atks.add(atk);
+            Thread t = new Thread(atk);
+            t.start();
+        }
+
+        System.out.println("attackTimes:" + attackTimes);
         System.out.println("Hero Attack");
-//        attack.show();
-        role.beAttacked(attack);
+        return getSkillCapability(attackTimes);
+
+
     }
 
-    private Capability getSkillCapability(List<SkillType> skills){
+    public List<Attack> getAtks() {
+        return atks;
+    }
+
+    public void setAtks(List<Attack> atks) {
+        this.atks = atks;
+    }
+
+    private Capability getSkillCapability(int attackTimes) {
         Capability total = getAttackCapability();
-        int attackTimes = 0;
-        for (SkillType skill:skills){
-            attackTimes += skill.getSkillNumber();
-        }
         return total.multiple(attackTimes);
     }
 
-    public void addExp(int exp){
+    public void setCurrentSkill(Skill skill) {
+        this.currentSkill = skill;
+    }
+
+
+    public void addExp(int exp) {
         this.exp += exp;
     }
 
-    public void addSkill(SkillType skill){
+    public void addSkill(SkillType skill) {
         this.skills.add(skill);
     }
 
 
-    public void setState(RoleState heroState){
+    public void setState(RoleState heroState) {
         this.state = heroState;
     }
 

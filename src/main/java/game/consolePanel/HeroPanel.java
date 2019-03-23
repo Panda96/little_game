@@ -3,10 +3,15 @@ package game.consolePanel;
 import constant.Constant;
 import constant.EquipmentType;
 import constant.SkillType;
-import equipment.Equipment;
+import equipment.Capability;
 import game.Game;
 import game.GameFrame;
+import role.Attack;
 import role.Hero;
+import role.Monster;
+import role.skills.ComboSkill;
+import role.skills.SingleSkill;
+import role.skills.Skill;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +23,7 @@ import java.util.List;
 /**
  * Created by PandaLin on 2019/3/22.
  */
-public class HeroPanel extends JPanel implements ActionListener{
+public class HeroPanel extends JPanel implements ActionListener {
     private GameFrame frame;
     private MonsterPanel monsterPanel;
     private Game game;
@@ -27,36 +32,41 @@ public class HeroPanel extends JPanel implements ActionListener{
     private List<SkillType> skills;
     private HeroPanel that;
     private JButton next_monster;
+    private JButton[] skill_buttons;
+
+    private Capability hero_attack;
+    private Capability monster_attack;
 
     private EquipmentFrame equipmentFrame;
 
     private JLabel m_name, m_capability, m_level, m_life, m_money, m_gem;
 
-    public HeroPanel(Game game, GameFrame frame, MonsterPanel monsterPanel){
+    public HeroPanel(Game game, GameFrame frame, MonsterPanel monsterPanel) {
         that = this;
         this.frame = frame;
         this.monsterPanel = monsterPanel;
         this.game = game;
-        this.hero = (Hero)game.getHero();
+        this.hero = (Hero) game.getHero();
         this.isCombo = false;
         this.skills = new ArrayList<SkillType>();
-        this.equipmentFrame = new EquipmentFrame(hero,this);
+        this.equipmentFrame = new EquipmentFrame(hero, this);
+        this.hero_attack = null;
+        this.monster_attack = null;
 
         this.setBackground(Color.WHITE);
         this.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         m_name = new JLabel();
-        m_name.setFont(Constant.header_fond);
+        m_name.setFont(Constant.header_font);
         m_capability = new JLabel();
-        m_capability.setFont(Constant.normal_fond);
+        m_capability.setFont(Constant.normal_font);
         m_level = new JLabel();
-        m_level.setFont(Constant.normal_fond);
+        m_level.setFont(Constant.normal_font);
         m_life = new JLabel();
-        m_life.setFont(Constant.normal_fond);
+        m_life.setFont(Constant.normal_font);
         m_money = new JLabel();
-        m_money.setFont(Constant.normal_fond);
+        m_money.setFont(Constant.normal_font);
         m_gem = new JLabel();
-        m_gem.setFont(Constant.normal_fond);
-
+        m_gem.setFont(Constant.normal_font);
 
 
         JButton armor = new JButton("铠甲");
@@ -86,16 +96,16 @@ public class HeroPanel extends JPanel implements ActionListener{
         this.add(skills_label);
 
         List<SkillType> skills = hero.getSkills();
-        JButton[] skill_buttons = new JButton[4];
+        skill_buttons = new JButton[4];
         int i = 1;
-        for(;i<=4;i++){
-            skill_buttons[i-1] = new JButton("技能"+i);
-            skill_buttons[i-1].setActionCommand(""+i);
-            skill_buttons[i-1].addActionListener(this);
-            if (i > skills.size()){
-                skill_buttons[i-1].setEnabled(false);
+        for (; i <= 4; i++) {
+            skill_buttons[i - 1] = new JButton("技能" + i);
+            skill_buttons[i - 1].setActionCommand("" + i);
+            skill_buttons[i - 1].addActionListener(this);
+            if (i > skills.size()) {
+                skill_buttons[i - 1].setEnabled(false);
             }
-            this.add(skill_buttons[i-1]);
+            this.add(skill_buttons[i - 1]);
         }
 
         skill_buttons[3].setText("组合技");
@@ -112,55 +122,80 @@ public class HeroPanel extends JPanel implements ActionListener{
     }
 
 
-    public void update(){
+    public void update() {
         m_name.setText("英雄:");
-        m_level.setText("等级: LV"+hero.getLevel());
-        m_life.setText("生命: "+hero.getCurrentLife());
-        m_capability.setText("能力:"+hero.getBaseCapability().getBase());
-        m_money.setText("金钱: "+hero.getMoney());
-        m_gem.setText("宝石: "+hero.getBag().toString());
+        m_level.setText("等级: LV" + hero.getLevel());
+        m_life.setText("生命: " + hero.getCurrentLife());
+        m_capability.setText("能力:" + hero.getBaseCapability().getBase());
+        m_money.setText("金钱: " + hero.getMoney());
+        m_gem.setText("宝石: " + hero.getBag().toString());
     }
-
-
-
 
 
     public void actionPerformed(ActionEvent e) {
         String command = e.getActionCommand();
 
-        if (command.equals("4")){
+        if (command.equals("4")) {
             isCombo = true;
-//            skills = new ArrayList<SkillType>();
-        }else {
+            skills = new ArrayList<SkillType>();
+        } else {
             SkillType skill = SkillType.getSkill(Integer.parseInt(command));
-            skills.add(skill);
-            if(!isCombo){
-                game.heroAttack(skills);
-                game.monsterAttack();
-                skills = new ArrayList<SkillType>();
-            }else{
-                if(skills.size() >= 2){
+
+            if (!isCombo) {
+                Skill oneSkill = new SingleSkill(skill);
+                hero.setCurrentSkill(oneSkill);
+            } else {
+                skills.add(skill);
+                if (skills.size() >= 2) {
                     isCombo = false;
-                    game.heroAttack(skills);
-                    game.monsterAttack();
-                    skills = new ArrayList<SkillType>();
+                    Skill comboSkill = new ComboSkill(skills);
+                    hero.setCurrentSkill(comboSkill);
                 }
             }
-
-
         }
-        if(game.getMonster().is_dead()){
+
+        if (!isCombo) {
+            hero_attack = game.heroAttack();
+//            while(true){
+//                boolean found = false;
+//                List<Attack> atks = hero.getAtks();
+//                for(Attack atk:atks){
+//                    if(atk.isValid()){
+//                        found = true;
+//                    }
+//                    break;
+//                }
+//                if(!found){
+//                    break;
+//                }
+//            }
+
+
+            game.monsterBeAttacked(hero_attack);
+            monsterPanel.update(game.getMonster());
+        }
+
+
+        if (game.getMonster().is_dead()) {
             next_monster.setEnabled(true);
-        }else if (game.getState().equals(game.getGameOverState())){
-            frame.getMainCard().show(frame.getMainPanel(), "2");
+        } else {
+            monster_attack = game.monsterAttack();
+            Monster monster = (Monster)game.getMonster();
+//            show_attack(monster.getAtk());
+//            while(monster.getAtk().isValid()){
+//
+//            }
+            game.heroBeAttacked(monster_attack);
+            if (game.getState().equals(game.getGameOverState())) {
+                frame.getMainCard().show(frame.getMainPanel(), "2");
+            }
+            this.update();
         }
-        monsterPanel.update(game.getMonster());
-        this.update();
         frame.getGamePanel().repaint();
-
     }
 
-    class NextListener implements ActionListener{
+
+    class NextListener implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             game.prepare();
@@ -168,26 +203,31 @@ public class HeroPanel extends JPanel implements ActionListener{
             frame.getGamePanel().repaint();
             that.update();
             monsterPanel.update(game.getMonster());
+
+            int level = hero.getLevel();
+            if (level <= 3) {
+                skill_buttons[level].setEnabled(true);
+            }
         }
     }
 
-    class ClearBag implements ActionListener{
+    class ClearBag implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             int cost = hero.getBag().sellAll();
-            hero.setMoney(hero.getMoney()+cost);
+            hero.setMoney(hero.getMoney() + cost);
             that.update();
         }
     }
 
-    class Adjust implements ActionListener{
+    class Adjust implements ActionListener {
 
         public void actionPerformed(ActionEvent e) {
             String command = e.getActionCommand();
-            if(command.equals("armor")){
+            if (command.equals("armor")) {
                 equipmentFrame.initial(EquipmentType.ARMOR);
                 equipmentFrame.setVisible(true);
-            }else{
+            } else {
                 equipmentFrame.initial(EquipmentType.GUN);
                 equipmentFrame.setVisible(true);
             }

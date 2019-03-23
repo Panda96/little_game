@@ -4,6 +4,7 @@ import constant.Quality;
 import equipment.Capability;
 import equipment.Equipment;
 import equipment.equipmentPower.WeaponPower;
+import util.ImageInfo;
 
 /**
  * Created by PandaLin on 2019/3/19.
@@ -24,7 +25,9 @@ public class Weapon extends Equipment {
         this.weaponBehavior = weaponBehavior;
     }
 
-    public void attack(){
-        weaponBehavior.useWeapon();
+    public ImageInfo useWeapon(){
+        return weaponBehavior.useWeapon();
     }
+
+
 }
