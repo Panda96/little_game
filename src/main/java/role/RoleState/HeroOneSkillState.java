@@ -39,13 +39,5 @@ public class HeroOneSkillState implements RoleState, Constant {
 
     }
 
-//    public List<SkillType> chooseSkill() {
-//        List<SkillType> attackSkills = new ArrayList<SkillType>();
-//        List<SkillType> skills = hero.getSkills();
-//        int skillId = Generator.getRandomNum(skills.size());
-//        attackSkills.add(skills.get(skillId));
-//        return attackSkills;
-//    }
-
 
 }
